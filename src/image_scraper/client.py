@@ -10,6 +10,10 @@ class Driver:
         options = webdriver.ChromeOptions()
         options.add_argument('--ignore-ssl-errors=yes')
         options.add_argument('--ignore-certificate-errors')
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+
         options.add_experimental_option('detach', True)
 
         caps = DesiredCapabilities.CHROME
@@ -20,7 +24,7 @@ class Driver:
 
         # start 
         self.driver.get(self.url)
-        
+
     def click_button(self, text: str) -> bool:
         buttons = self.driver.find_elements(By.XPATH, '//button')
         for button in buttons:
@@ -51,7 +55,7 @@ class Driver:
         self.driver.execute_script("window.scrollTo(0, 10*1080)") 
         time.sleep(1)
         
-        return False
+        return True
     
     def get_urls(self) -> bool:
         browser_log = self.driver.get_log('performance')
@@ -62,22 +66,3 @@ class Driver:
                 print(url)
                 
         return False
-
-def Init() -> int:
-    driver = Driver(url="https://www.images.google.com")
-    
-    # Accept agreement
-    if driver.click_button("Accept all"):
-        print('clicked')
-        
-    # Search for dogs
-    if driver.write_search_bar("tree"):
-        print('searched for dogs')
-        
-    # Submit
-    if driver.submit():
-        print('submit')
-        
-    driver.get_urls()
-    
-    return 1

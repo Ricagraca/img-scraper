@@ -2,14 +2,11 @@ FROM selenium/standalone-firefox
 
 USER root
 
-# # Update before starting
 RUN apt-get update -y
+RUN apt-get install -y wget
 
-# # We need wget to set up the PPA and xvfb to have a virtual screen and unzip to install the Chromedriver
-# RUN apt-get install -y wget xvfb unzip
-
-# RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-# RUN apt install -y ./google-chrome-stable_current_amd64.deb
+RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN apt-get install -y ./google-chrome-stable_current_amd64.deb
 
 WORKDIR /app
 
